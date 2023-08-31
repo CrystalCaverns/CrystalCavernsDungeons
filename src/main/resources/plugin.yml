@@ -1,0 +1,13 @@
+name: CrystalCavernsDungeons
+author: 'japicraft'
+version: '${project.version}'
+main: cc.crystalcavernsdungeons.CrystalCavernsDungeons
+api-version: '1.20'
+commands:
+  spawn:
+    description: Teleport the player to the server's global spawn point.
+    aliases: [lobby, hub]
+  crystalcaverns:
+    description: Main plugin command.
+    aliases: [cc]
+    permission: crystalcaverns.command
