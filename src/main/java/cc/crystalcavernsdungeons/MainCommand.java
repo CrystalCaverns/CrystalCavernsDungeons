@@ -11,8 +11,11 @@ import java.util.Objects;
 public class MainCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (args.length == 1) {
-            if ("boss_shockwave".equals(args[0])) {
+            if ("shockwave".equals(args[0])) {
                 Shockwave.start(Objects.requireNonNull(Bukkit.getPlayer(sender.getName())).getLocation());
+            }
+            if ("knockup".equals(args[0])) {
+                VineKnockup.start(Objects.requireNonNull(Bukkit.getPlayer(sender.getName())).getLocation());
             }
         }
         return false;

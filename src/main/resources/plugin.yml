@@ -7,6 +7,8 @@ commands:
   spawn:
     description: Teleport the player to the server's global spawn point.
     aliases: [lobby, hub]
+  party:
+    description: Used to create and manage a Dungeon Run party.
   crystalcaverns:
     description: Main plugin command.
     aliases: [cc]

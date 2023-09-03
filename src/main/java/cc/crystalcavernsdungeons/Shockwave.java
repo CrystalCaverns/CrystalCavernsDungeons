@@ -9,8 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Transformation;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 
 import static cc.crystalcavernsdungeons.CrystalCavernsDungeons.plugin;
 
@@ -21,20 +21,27 @@ public class Shockwave {
         itemMeta.setCustomModelData(5);
         itemstack.setItemMeta(itemMeta);
         BukkitScheduler scheduler = Bukkit.getScheduler();
-        for (int i = 0; i <= 7; i++) {
+        for (int i = 0; i <= 3; i++) {
             ItemDisplay itemdisplay = (ItemDisplay) location.getWorld().spawnEntity(location, EntityType.ITEM_DISPLAY);
             itemdisplay.setItemStack(itemstack);
             itemdisplay.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
-            itemdisplay.setRotation(45 * i,0);
+            itemdisplay.setRotation(90 * i,0);
             scheduler.runTaskLater(plugin, () -> {
-                itemdisplay.setInterpolationDuration(100);
+                itemdisplay.setInterpolationDuration(120);
                 itemdisplay.setInterpolationDelay(-1);
                 Transformation transformation = itemdisplay.getTransformation();
-                transformation.getTranslation().set(new Vector3f(8,0,0));
-                transformation.getScale().set(1,1,8);
+                transformation.getScale().set(1,1,40);
                 itemdisplay.setTransformation(transformation);
-            }, 10L);
-            scheduler.runTaskLater(plugin, itemdisplay::remove, 100L);
+            }, 2L);
+            int id = scheduler.runTaskTimer(plugin, () -> {
+                Location item_location = itemdisplay.getLocation();
+                Vector item_vector = itemdisplay.getFacing().getDirection().add(new Vector(0,0,0.05));
+                itemdisplay.teleport(item_location.add(item_vector));
+            }, 2L,1L).getTaskId();
+            scheduler.runTaskLater(plugin, () -> {
+                itemdisplay.remove();
+                scheduler.cancelTask(id);
+            }, 120L);
         }
     }
 }
