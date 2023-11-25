@@ -11,28 +11,12 @@ import static cc.crystalcavernsdungeons.CrystalCavernsDungeons.plugin;
 
 public class SpawnCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage("§cOnly a player can execute this command!");
+            return false;
         }
-        boolean is_op1 = sender.isOp();
-        try {
-            sender.setOp(true);
-            plugin.getServer().dispatchCommand(sender,"gizmo fade 10 100 10");
-            sender.setOp(is_op1);
-        } catch (Exception exception) {
-            sender.setOp(is_op1);
-            sender.sendMessage("SUPER RARE ERROR! PLEASE REPORT IMMEDIATELY! ID: SpawnCommand Rare Error");
-        }
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            boolean is_op2 = sender.isOp();
-            try {
-                sender.setOp(true);
-                plugin.getServer().dispatchCommand(sender,"warp Spawn");
-                sender.setOp(is_op2);
-            } catch (Exception exception) {
-                sender.setOp(is_op2);
-                sender.sendMessage("SUPER RARE ERROR! PLEASE REPORT IMMEDIATELY! ID: SpawnCommand Rare Error");
-            }}, 20L);
+        player.sendTitle("\uDBEA\uDDE8","",10,40,10);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"warp Spawn " + player.getName()), 20L);
         return false;
     }
 }
